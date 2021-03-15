@@ -49,21 +49,27 @@ open_queue.append(State(puzzle, goal))
 
 closed_queue = []
 moves = 0
+check = 0
 
 while len(open_queue) != 0:
-	current = open_queue.pop(0)		# 맨 앞에꺼 빼기 (큐)
-	print(current)
+    current = open_queue.pop(0)		# 맨 앞에꺼 빼기 (큐)
+    print(current)
 
-	if current.board == goal:
-		print("탐색 성공")
-		break
-    
-	moves = current.moves + 1
-	closed_queue.append(current)
+    if current.board == goal:
+        print("탐색 성공")
+        break
 
-	for state in current.expand(moves):
-		if (state in closed_queue) or (state in open_queue):
-			continue
-		else:
-			open_queue.append(state)
+    moves = current.moves + 1
+    closed_queue.append(current)
 
+    for state in current.expand(moves):
+
+        for i in (closed_queue + open_queue):
+            if state.board == i.board:
+                check = 1
+                break
+
+        if check != 1:
+            open_queue.append(state)
+
+        check = 0
