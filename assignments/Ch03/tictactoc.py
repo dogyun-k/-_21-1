@@ -1,7 +1,7 @@
-# 보드는 1차원 리스트로 구현한다.
 game_board = [' ', ' ', ' ',
               ' ', ' ', ' ',
               ' ', ' ', ' ']
+
 
 # 비어있는 칸을 찾아서 리스트로 반환한다.
 def empty_cells(board):
@@ -10,6 +10,7 @@ def empty_cells(board):
         if cell == ' ':
             cells.append(x)
     return cells
+
 
 # 비어있는 칸에는 놓을 수 있다.
 def valid_move(x):
@@ -21,6 +22,7 @@ def move(x, player):
         game_board[x] = player
         return True
     return False
+
 
 # 현재 게임 보드를 그린다.
 def draw(board):
@@ -92,8 +94,9 @@ def minimax(board, depth, maxPlayer):
                 pos = p # 최소값의 위치를 기억한다.
     return pos, value # 위치와 값을 반환한다.
 
-player='X'
 
+
+player = 'X'
 
 # 메인 프로그램
 while True:
@@ -106,6 +109,8 @@ while True:
         player='O'
     else:
         player='X'
+
+# 결과
 if check_win(game_board, 'X'):
     print('X 승리!')
 elif check_win(game_board, 'O'):
