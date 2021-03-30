@@ -7,13 +7,11 @@ class State:
         self.moves = moves
         self.goal = goal
 
-
     def get_new_board(self, i1, i2, moves):
         new_board = self.board[:]
         new_board[i1], new_board[i2] = new_board[i2], new_board[i1]
 
         return State(new_board, self.goal, moves)
-
 
     def expand(self, moves):
         result = []
@@ -30,7 +28,6 @@ class State:
             result.append(self.get_new_board(i, i+3, moves))
         
         return result
-    
     
     def __str__(self):
         return str(self.board[:3]) +"\n"+str(self.board[3:6]) +"\n"+str(self.board[6:]) +"\n----------"
@@ -57,35 +54,27 @@ moves = 0
 
 while len(open_stack) != 0:
 
-	# print("Open stack")
-	# for i in open_stack:
-	# 	print(i)
+    # print("Open stack")
+    # for i in open_stack:
+    # 	print(i)
 
-	# print("Close stack")
-	# for i in closed_stack:
-	# 	print(i)
+    # print("Close stack")
+    # for i in closed_stack:
+    # 	print(i)
 
-	current = open_stack.pop()     # 맨 뒤에꺼 뺴기 (스택)
-	print(current)
+    current = open_stack.pop()     # 맨 뒤에꺼 뺴기 (스택)
+    print(current)
 
-	if current.board == goal:
-		print("탐색 성공")
-		break
-
-
-	moves = current.moves + 1
-	closed_stack.append(current)    # 검사 했으니 클로즈로 
+    if current.board == goal:
+        print("탐색 성공")
+        break
 
 
-	for state in current.expand(moves):
-		
-		if (state in closed_stack) or (state in open_stack):
-			continue
-		
-		else:
-			open_stack.append(state)
+    moves = current.moves + 1
+    closed_stack.append(current)    # 검사 했으니 클로즈로 
 
-	print()
-	print()
+    for state in current.expand(moves):
 
-	time.sleep(1)
+        if (state not in closed_stack) and (state not in open_stack):
+            open_stack.append(state)
+            
