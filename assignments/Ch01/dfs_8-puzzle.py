@@ -34,8 +34,8 @@ class State:
 
 puzzle = [
     1, 2, 3,
-    0, 4, 6,
-    7, 5, 8
+    0, 5, 6,
+    4, 7, 8
 ]
 
 goal = [
@@ -50,26 +50,16 @@ open_stack.append(State(puzzle, goal))  # 초기 보드 넣어주고
 
 closed_stack = []       # 검사한 것 넣기
 moves = 0
-
+check = 0
 
 while len(open_stack) != 0:
-
-    # print("Open stack")
-    # for i in open_stack:
-    # 	print(i)
-
-    # print("Close stack")
-    # for i in closed_stack:
-    # 	print(i)
-
     current = open_stack.pop()     # 맨 뒤에꺼 뺴기 (스택)
     print(current)
 
     if current.board == goal:
         print("탐색 성공")
         break
-
-
+ 
     moves = current.moves + 1
     closed_stack.append(current)    # 검사 했으니 클로즈로 
 
@@ -78,3 +68,12 @@ while len(open_stack) != 0:
         if (state not in closed_stack) and (state not in open_stack):
             open_stack.append(state)
             
+        for i in (closed_stack + open_stack):   # 검사했는지 안했는지 검사
+            if state.board == i.board:
+                check = 1
+                break
+
+        if check != 1:
+            open_stack.append(state)
+
+        check = 0

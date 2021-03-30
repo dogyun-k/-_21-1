@@ -62,6 +62,7 @@ open_queue.put(State(puzzle, goal))
 
 closed_queue = []
 moves = 0
+check = 0
 
 while not open_queue.empty():
 
@@ -75,9 +76,16 @@ while not open_queue.empty():
     moves = current.moves + 1
 
     for state in current.expand(moves):
-        if state not in closed_queue:
+
+        for i in closed_queue:
+            if state.board == i.board:
+                check = 1
+
+        if check != 1:
             open_queue.put(state)
     
+        check = 0
+        
     closed_queue.append(current)
     
 else:
